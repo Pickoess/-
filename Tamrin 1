@@ -1,0 +1,321 @@
+# -*- coding: utf-8 -*-
+"""
+
+Created on Thu Apr 13 16:43:13 2023
+
+@author: Amir Hossein Dabbaghi Varnosfaderani
+"""
+
+from abc import ABC, abstractmethod
+
+class Site(ABC):   
+    #Getting some information from user.
+    def __init__(self, first_name, last_name, age, email, username, password, favoutire_jenre, favourite_movie):
+        print('Welcome to AVA Movie site.')
+        
+        self.site = 'ava movie'
+        self.first_name = first_name
+        self.last_name = last_name
+        self.age = age
+        self._email = email        #protected attribution
+        self.__username = username     #private attribution
+        self.__password = password     #private attribution
+    #Showing those information and pay attention about private attributions.    
+    def create_account(self):
+        print('Information') 
+        print('First Name = ', self.first_name)
+        print('Last Name = ', self.last_name)
+        print('Age = ', self.age)
+        print('Email =  *******')
+        print('Username =  *******')
+        print('Password =  *******')
+    #Functions that return some data about the user.
+    def show_name(self):
+        return self.first_name, self.last_name
+
+    def show_Username(self):
+        return self.__username
+    
+    def show_password(self):
+        return self.__password
+    
+    @abstractmethod
+    def more_information(self):
+        pass
+    
+    
+class Movies:     
+    quality = 1080
+    #Getting some information about movie.
+    def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages, summary):
+        self.__name = name
+        self.IMDB_score = IMDB_score
+        self.people_rating = people_rating
+        self.runtime = runtime
+        self.year = production_year
+        self.country = country
+    #Showing some data about the movie by Fuctions.       
+    def show_name(self):
+        return self.__name
+    #Showing the average rate.
+    def rate(self):
+        return ((self.IMDB_score * 10) + self.people_rating) / 2
+    #Checking the duration of the movie.
+    def runtime(self):
+        if self.runtime > 100:
+            print('It is a long movie.')
+        elif 60 < self.runtime < 100:
+            print('It is a medium movie.')
+        else:
+            print('It is a short movie.')
+        
+        
+class Searching_for_details:
+    
+    def __init__(self, name, production_year, directed_by):
+        self.name = name
+        self.year = production_year
+        self.director = directed_by
+    #Checking the expriences of director by its age.    
+    def director_age(self, age):
+        if age > 50:
+            print(self.director, 'is a great director. He also has a great career in movie industry.')
+        else:
+            print(self.director, 'is a new director. He is some great abilities that can change the movie industry.')
+    #Checking whether the movie is old or new by production year.
+    def new_old(self):
+        if self.year > 1990:
+            print('This is a new movie.', 2023 - self.year, 'years have passed since its creation and publication.')
+        else:
+            print('This is an old movie.', 2023 - self.year, 'years have passed since its creation and publication.')
+            
+            
+class Action(Movies):
+    
+    def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages):
+        self.jenre = 'Action'
+        self.name = name
+        self.production_year = production_year
+        self.country = country
+        self.directed_by = directed_by
+        self.quality = Movies.quality    #Composition
+    #Giving a short overview about the movie.
+    def Overview(self):
+        return f"{self.name} is an {self.jenre} movie produced in {self.country} which was made in {self.production_year} by director {self.directed_by}."
+    
+    def Quote(self):
+        print("I hope you enjoy watching this movie!")
+        
+        
+class Comedy(Movies):
+    
+    def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages):
+        self.jenre = 'Comedy'
+        self.name = name
+        self.runtime = runtime
+        self.quality = Movies.quality    #Composition
+    #Giving a short overview about the movie.
+    def Overview(self):
+        return f"{self.name} is a {self.jenre} movie for {self.runtime} minutes."
+    
+    def Quote(self):
+        print("I hope you enjoy watching this movie!")
+        
+        
+class Drama(Movies):
+    
+    def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages, quality = None):
+        self.jenre = 'Drama'
+        self.name = name
+        self.quality = quality
+    #Giving a short overview about the movie.        
+    def Actors(self, *args):      #*args
+        self.actor1 = args[0]
+        self.actor2 = args[1]
+        return f"Among the actors of this film, we can mention {self.actor1} and {self.actor2}."
+    #Checking whether the quality is given or not.
+    def quality(self):
+        if self.quality == None:
+            print('The quality is not clear.')
+        else:
+            print('The quality is ', self.quality)
+            
+    def Quote(self):
+        print("I hope you enjoy watching this movie!")
+        
+
+class Romance(Movies):
+    
+    def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages, summary):
+        self.jenre = 'Romance'
+        self.name = name
+        self.summary = summary
+        self.quality = Movies.quality    #Composition
+    #Giving a short overview about the movie.        
+    def Short_summary(self):
+        return f"A short summary of this movie: {self.summary}."
+    
+    def Quote(self):
+        print("I hope you enjoy watching this movie!")
+        
+        
+class Science_fiction(Movies): 
+    
+    def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages):
+        #super().__init__(self, movie_name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages, quality)
+        self.jenre = 'Science fiction'
+        self.name = name
+        self.IMDB_score = IMDB_score
+        self.quality = Movies.quality    #Composition
+        self.people_rating = people_rating
+    #Giving a short overview about the movie.                
+    def Overview(self):
+        return f"{self.name} is a {self.jenre} movie."
+    
+    def More_details(self):
+        return f"and also Its IMDB score is {self.IMDB_score} out of 10, but people gave it a score of {self.people_rating} out of 100."
+    
+    def Quote(self):
+        print("I hope you enjoy watching this movie!")
+        
+        
+class Horror(Movies): 
+    
+    def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages):
+        self.jenre = 'Horror'
+        self._name = name      #protected attribution
+        self.quality = Movies.quality    #Composition
+        self.PG = 'PG +13'
+    #Giving a short overview about the movie.                
+    def Overview(self):
+        return f"You must pay attention to {self.jenre} jenre. You have to meet the age limit ({self.PG}) to watch it."
+    
+    def show_name(self):
+        return self._name
+    
+    def Quote(self):
+        print("I hope you enjoy watching this movie But be careful and don't watch it alone!")
+        
+        
+class Adventure(Movies):
+    
+    def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages, quality = None):
+        self.jenre = 'Adventure'
+        self.name = name
+        self.directed_by = directed_by
+        self.written_by = written_by
+        self.quality = quality
+    #Checking whether the quality is given or not.   
+    def quality(self):
+        if self.quality == None:
+            print('The quality is not clear.')
+        else:
+            print('The quality is ', self.quality)
+    #Giving a short overview about the movie.                
+    def Overview(self):
+        return f"{self.name} is an {self.jenre} movie. The writer and director of this movie are {self.written_by} and {self.directed_by}."
+    
+    def Quote(self):
+        print("You probably like his jenre. So I hope you enjoy watching this movie!")
+        
+
+class Fantacy(Movies):
+    
+    def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages, quality):
+        self.jenre = 'Adventure'
+        self.name = name
+        self.country = country
+    #Giving a short overview about the movie.               
+    def Overview(self):
+        return f"{self.name} movie was produced in {self.country}. Because of some reasons, it is forbidden to watch it in China!"
+    
+    def Quote(self):
+        print("If you are Chinese, You must not watch it!")
+        
+
+class mystery(Movies):
+    
+    def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages):
+        self.jenre = 'Adventure'
+        self.name = name
+        self.quality = Movies.quality    #Composition
+        self.languages = languages
+        self.site = 'ava movie'
+    #Giving a short overview about the movie.                
+    def Overview(self):
+        return f"You can download {self.name} from {self.site}. {self.name} movie is in {self.languages} language but you can watch it with subtitles."
+    
+    def Quote(self):
+        print("I hope you enjoy watching this movie")    
+        
+        
+class Sports(Movies):
+    
+    def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages, quality = None):
+        self.jenre = 'Sports'
+        self.name = name
+        self.quality = quality
+    #Giving a short overview about the movie.                
+    def Overview(self):
+        return f"{self.jenre} movies are so popular. People have several {self.jenre} movies like {self.name}."
+    #Checking whether the quality is given or not.    
+    def quality(self):
+        if self.quality == None:
+            print('The quality is not clear.')
+        elif self.quality > Movies.quality:      #Composition
+            print('The quality is so good!')
+        else:
+            print('The quality is ', self.quality)
+            
+    def Quote(self):
+        print("If you really like this jenre, you can also watch its competitions from TV or in Stadiums.")   
+        
+
+class Western(Movies):
+    
+    def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages):
+        self.jenre = 'Western'
+        self.__name = name      #private attribution
+        self.year = production_year
+        self.quality = Movies.quality    #Composition
+    #Giving a short overview about the movie.                
+    def Overview(self):
+        return f"Oh wow. It is from {self.year}. I think you are an old person. {self.jenre} movies are the most popular movies around the world. When we watch these movies like {self.__name}, We always enjoy that movie and we don't take our eyes off it for a moment."
+    #Showing the name of the movie (private).
+    def show_name(self):
+        return self.__name
+    
+    def Quote(self):
+        print("I hope you enjoy watching this movie")   
+        
+        
+class All_movies:
+    #Getting all movies he watch, then check whether its number is high or low. 
+    def __init__(self, *args):      #*args
+        if len(args) >= 10:
+            print('Cogratulation! you are cinphile (A person with a passionate interest in cinema).')
+        else:
+            print("You do not watch movies a lot.")
+            
+        print('your movies are:')
+        for film in args:
+            print(film)
+            
+            
+class Favorite:
+    
+    def __init__(self, favorite, best_friend = None):
+        self.__favorite = favorite       #private attribution
+        self.__best_friend = best_friend     #private attribution
+    #Checking whether he writes his best friend or not.
+    def invitation(self):
+        if self.__best_friend == None:
+            print('Do not send any invitation.')
+        else:
+            print('Please send my favorite movie to', self.__best_friend)
+    #Showing his favorite movie.        
+    def favorite(self):
+        return self.__favorite
+    #Writing the number of his favorite movies.
+    def list_movies(self, *args):      #*args
+        return "you have " + str(len(args)) + " favorite movies."
