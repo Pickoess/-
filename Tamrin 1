@@ -146,7 +146,7 @@ class Drama(Movies):
 
 class Romance(Movies):
     
-    def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages, summary):
+    def __init__(self, name, runtime, production_year, directed_by, written_by, languages, summary):
         self.jenre = 'Romance'
         self.name = name
         self.summary = summary
@@ -162,7 +162,6 @@ class Romance(Movies):
 class Science_fiction(Movies): 
     
     def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages):
-        #super().__init__(self, movie_name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages, quality)
         self.jenre = 'Science fiction'
         self.name = name
         self.IMDB_score = IMDB_score
@@ -175,8 +174,18 @@ class Science_fiction(Movies):
     def More_details(self):
         return f"and also Its IMDB score is {self.IMDB_score} out of 10, but people gave it a score of {self.people_rating} out of 100."
     
+
     def Quote(self):
         print("I hope you enjoy watching this movie!")
+        
+#A much more detailed class.        
+class Marvel(Science_fiction):
+    
+    def __init__(self, name):
+        self.name = name
+        
+    def about(self):
+        return f"{self.name} is one of the Marvel's movies. Marvel is a very famous company that makes characters with extraordinary features and abilities. He has also made movies from those characters."
         
         
 class Horror(Movies): 
@@ -196,7 +205,16 @@ class Horror(Movies):
     def Quote(self):
         print("I hope you enjoy watching this movie But be careful and don't watch it alone!")
         
+#A much more detailed class.        
+class Conjuring(Horror):
+    
+    def __init__(self, number):
+        self.number = number
         
+    def about(self):
+        return f"Conjuring number {self.number} is one of the scariest movies in history."
+        
+    
 class Adventure(Movies):
     
     def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages, quality = None):
@@ -221,7 +239,7 @@ class Adventure(Movies):
 
 class Fantacy(Movies):
     
-    def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages, quality):
+    def __init__(self, name, directed_by, written_by, country, languages, quality):
         self.jenre = 'Adventure'
         self.name = name
         self.country = country
@@ -251,7 +269,7 @@ class mystery(Movies):
         
 class Sports(Movies):
     
-    def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages, quality = None):
+    def __init__(self, name, runtime, production_year, directed_by, written_by, country, languages, quality = None):
         self.jenre = 'Sports'
         self.name = name
         self.quality = quality
@@ -273,7 +291,7 @@ class Sports(Movies):
 
 class Western(Movies):
     
-    def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages):
+    def __init__(self, name, IMDB_score, people_rating, production_year, directed_by, written_by, country, languages):
         self.jenre = 'Western'
         self.__name = name      #private attribution
         self.year = production_year
