@@ -1,0 +1,122 @@
+# -*- coding: utf-8 -*-
+"""
+
+Created on Thu Apr 13 16:43:13 2023
+
+@author: Amir Hossein Dabbaghi Varnosfaderani
+"""
+
+from abc import ABC, abstractmethod
+
+class Site(ABC):   
+    #Getting some information from user.
+    def __init__(self, first_name, last_name, age, email, username, password, favoutire_jenre, favourite_movie):
+        print('Welcome to AVA Movie site.')
+        
+        self.site = 'ava movie'
+        self.first_name = first_name
+        self.last_name = last_name
+        self.age = age
+        self._email = email        #protected attribution
+        self.__username = username     #private attribution
+        self.__password = password     #private attribution
+    #Showing those information and pay attention about private attributions.    
+    def create_account(self):
+        print('Information') 
+        print('First Name = ', self.first_name)
+        print('Last Name = ', self.last_name)
+        print('Age = ', self.age)
+        print('Email =  *******')
+        print('Username =  *******')
+        print('Password =  *******')
+    #Functions that return some data about the user.
+    def show_name(self):
+        return self.first_name, self.last_name
+
+    def show_Username(self):
+        return self.__username
+    
+    def show_password(self):
+        return self.__password
+    
+    @abstractmethod
+    def more_information(self):
+        pass
+    
+    
+class Movies:     
+    quality = 1080
+    #Getting some information about movie.
+    def __init__(self, name, IMDB_score, people_rating, runtime, production_year, directed_by, written_by, country, languages, summary):
+        self.__name = name
+        self.IMDB_score = IMDB_score
+        self.people_rating = people_rating
+        self.runtime = runtime
+        self.year = production_year
+        self.country = country
+    #Showing some data about the movie by Fuctions.       
+    def show_name(self):
+        return self.__name
+    #Showing the average rate.
+    def rate(self):
+        return ((self.IMDB_score * 10) + self.people_rating) / 2
+    #Checking the duration of the movie.
+    def runtime(self):
+        if self.runtime > 100:
+            print('It is a long movie.')
+        elif 60 < self.runtime < 100:
+            print('It is a medium movie.')
+        else:
+            print('It is a short movie.')
+        
+        
+class Searching_for_details:
+    
+    def __init__(self, name, production_year, directed_by):
+        self.name = name
+        self.year = production_year
+        self.director = directed_by
+    #Checking the expriences of director by its age.    
+    def director_age(self, age):
+        if age > 50:
+            print(self.director, 'is a great director. He also has a great career in movie industry.')
+        else:
+            print(self.director, 'is a new director. He is some great abilities that can change the movie industry.')
+    #Checking whether the movie is old or new by production year.
+    def new_old(self):
+        if self.year > 1990:
+            print('This is a new movie.', 2023 - self.year, 'years have passed since its creation and publication.')
+        else:
+            print('This is an old movie.', 2023 - self.year, 'years have passed since its creation and publication.')
+        
+        
+class All_movies:
+    #Getting all movies he watch, then check whether its number is high or low. 
+    def __init__(self, *args):      #*args
+        if len(args) >= 10:
+            print('Cogratulation! you are cinphile (A person with a passionate interest in cinema).')
+        else:
+            print("You do not watch movies a lot.")
+            
+        print('your movies are:')
+        for film in args:
+            print(film)
+            
+            
+class Favorite:
+    
+    def __init__(self, favorite, best_friend = None):
+        self.__favorite = favorite       #private attribution
+        self.__best_friend = best_friend     #private attribution
+    #Checking whether he writes his best friend or not.
+    def invitation(self):
+        if self.__best_friend == None:
+            print('Do not send any invitation.')
+        else:
+            print('Please send my favorite movie to', self.__best_friend)
+    #Showing his favorite movie.        
+    def favorite(self):
+        return self.__favorite
+    #Writing the number of his favorite movies.
+    def list_movies(self, *args):      #*args
+        return "you have " + str(len(args)) + " favorite movies."
